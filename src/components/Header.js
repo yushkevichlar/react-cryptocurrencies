@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import { CryptoState } from "../CryptoContext";
 
 const StyledTypography = styled(Typography)({
   flex: 1,
@@ -19,17 +20,14 @@ const StyledTypography = styled(Typography)({
 });
 
 const Header = () => {
-  const [currency, setCurrency] = React.useState("");
   const navigate = useNavigate();
+  const { currency, setCurrency } = CryptoState();
+
   const darkTheme = createTheme({
     palette: {
       mode: "dark",
     },
   });
-
-  const handleCurrencyChange = (event) => {
-    setCurrency(event.target.value);
-  };
 
   return (
     <ThemeProvider theme={darkTheme}>
@@ -43,8 +41,9 @@ const Header = () => {
             <Select
               variant="outlined"
               style={{ width: 100, height: 40, marginLeft: 15 }}
+              value={currency}
               defaultValue={"USD"}
-              onChange={handleCurrencyChange}>
+              onChange={(e) => setCurrency(e.target.value)}>
               <MenuItem value={"USD"}>USD</MenuItem>
               <MenuItem value={"EUR"}>EUR</MenuItem>
             </Select>
