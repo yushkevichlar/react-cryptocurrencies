@@ -20,8 +20,9 @@ const StyledTypography = styled(Typography)({
 });
 
 const Header = () => {
-  const navigate = useNavigate();
   const { currency, setCurrency } = CryptoState();
+
+  const navigate = useNavigate();
 
   const darkTheme = createTheme({
     palette: {
