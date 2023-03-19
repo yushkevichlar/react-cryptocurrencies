@@ -8,6 +8,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Container } from "@mui/system";
 import {
   LinearProgress,
+  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -20,16 +21,23 @@ import {
 import { numberWithCommas } from "./Banner/Carousel";
 
 const StyledTableRow = styled(TableRow)({
-  flex: 1,
-  color: "gold",
-  fontWeight: "bold",
-  cursor: "pointer",
-});
+    backgroundColor: "#16171a",
+    "&:hover": {
+      backgroundColor: "#131111",
+    },
+    cursor: "pointer",
+  }),
+  StyledPagination = styled(Pagination)({
+    "& .MuiPaginationItem-root": {
+      color: "gold",
+    },
+  });
 
 const CoinsTable = () => {
   const [coins, setCoins] = useState([]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState();
+  const [page, setPage] = useState(1);
   const { currency, symbol } = CryptoState();
 
   const navigate = useNavigate();
@@ -48,6 +56,11 @@ const CoinsTable = () => {
       mode: "dark",
     },
   });
+
+  const handlePageChange = (val) => {
+    setPage(val);
+    window.scroll(0, 450);
+  };
 
   useEffect(() => {
     fetchCoins();
@@ -99,65 +112,83 @@ const CoinsTable = () => {
               </TableHead>
 
               <TableBody>
-                {handleSearch().map((row) => {
-                  const profit = row.price_change_percentage_24h > 0;
+                {handleSearch()
+                  .slice((page - 1) * 10, (page - 1) * 10 + 10)
+                  .map((row) => {
+                    const profit = row.price_change_percentage_24h > 0;
 
-                  return (
-                    <StyledTableRow
-                      key={row.name}
-                      onClick={() => navigate(`/coins/${row.id}`)}>
-                      <TableCell
-                        component="th"
-                        scope="row"
-                        style={{ display: "flex", gap: 15 }}>
-                        <img
-                          src={row?.image}
-                          alt={row.name}
-                          height="50"
-                          style={{ marginBottom: 10 }}
-                        />
-                        <div
-                          style={{ display: "flex", flexDirection: "column" }}>
-                          <span
+                    return (
+                      <StyledTableRow
+                        key={row.name}
+                        onClick={() => navigate(`/coins/${row.id}`)}>
+                        <TableCell
+                          component="th"
+                          scope="row"
+                          style={{ display: "flex", gap: 15 }}>
+                          <img
+                            src={row?.image}
+                            alt={row.name}
+                            height="50"
+                            style={{ marginBottom: 10 }}
+                          />
+                          <div
                             style={{
-                              textTransform: "uppercase",
-                              fontSize: 22,
+                              display: "flex",
+                              flexDirection: "column",
                             }}>
-                            {row.symbol}
-                          </span>
-                          <span style={{ color: "darkgrey" }}>{row.name}</span>
-                        </div>
-                      </TableCell>
+                            <span
+                              style={{
+                                textTransform: "uppercase",
+                                fontSize: 22,
+                              }}>
+                              {row.symbol}
+                            </span>
+                            <span style={{ color: "darkgrey" }}>
+                              {row.name}
+                            </span>
+                          </div>
+                        </TableCell>
 
-                      <TableCell
-                        align="right"
-                        style={{
-                          color: profit > 0 ? "#0cbd78" : "#ec0f24",
-                          fontWeight: 500,
-                        }}>
-                        {profit && "+"}
-                        {row.price_change_percentage_24h.toFixed(2)}%
-                      </TableCell>
+                        <TableCell
+                          align="right"
+                          style={{
+                            color: profit > 0 ? "#0cbd78" : "#ec0f24",
+                            fontWeight: 500,
+                          }}>
+                          {profit && "+"}
+                          {row.price_change_percentage_24h.toFixed(2)}%
+                        </TableCell>
 
-                      <TableCell align="right">
-                        {symbol}{" "}
-                        {numberWithCommas(row.current_price.toFixed(2))}
-                      </TableCell>
+                        <TableCell align="right">
+                          {symbol}{" "}
+                          {numberWithCommas(row.current_price.toFixed(2))}
+                        </TableCell>
 
-                      <TableCell align="right">
-                        {symbol}{" "}
-                        {numberWithCommas(
-                          row.market_cap.toString().slice(0, -6)
-                        )}
-                        M
-                      </TableCell>
-                    </StyledTableRow>
-                  );
-                })}
+                        <TableCell align="right">
+                          {symbol}{" "}
+                          {numberWithCommas(
+                            row.market_cap.toString().slice(0, -6)
+                          )}
+                          M
+                        </TableCell>
+                      </StyledTableRow>
+                    );
+                  })}
               </TableBody>
             </Table>
           )}
         </TableContainer>
+
+        <StyledPagination
+          style={{
+            padding: 20,
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+          }}
+          count={Number((handleSearch()?.length / 10).toFixed(0))}
+          onChange={(_, value) => handlePageChange(value)}
+        />
       </Container>
     </ThemeProvider>
   );
