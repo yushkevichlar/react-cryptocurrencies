@@ -41,6 +41,7 @@ const StyledContainer = styled("div")(({ theme }) => ({
   StyledMarketData = styled("div")(({ theme }) => ({
     alignSelf: "start",
     padding: 5,
+    paddingLeft: 25,
     width: "100%",
     [theme.breakpoints.down("md")]: {
       display: "flex",
@@ -116,7 +117,7 @@ const CoinPage = () => {
             <Typography variant="h5">
               {symbol}{" "}
               {numberWithCommas(
-                coin?.market_data.current_price[currency.toLowerCase()]
+                coin?.market_data.market_cap[currency.toLowerCase()]
                   .toString()
                   .slice(0, -6)
               )}

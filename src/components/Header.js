@@ -15,6 +15,7 @@ import { CryptoState } from "../CryptoContext";
 const StyledTypography = styled(Typography)({
   flex: 1,
   color: "gold",
+  fontSize: 30,
   fontWeight: "bold",
   cursor: "pointer",
 });
@@ -36,7 +37,7 @@ const Header = () => {
         <Container>
           <Toolbar>
             <StyledTypography onClick={() => navigate("/")}>
-              💰🤑💰
+              💰
             </StyledTypography>
 
             <Select
