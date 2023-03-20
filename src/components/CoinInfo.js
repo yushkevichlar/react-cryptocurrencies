@@ -47,6 +47,15 @@ const CoinInfo = ({ coin }) => {
     },
   });
 
+  const mappedChartDays = chartDays.map((day) => (
+    <ChartButton
+      key={day.value}
+      selected={day.value === days}
+      onClick={() => setDays(day.value)}>
+      {day.label}
+    </ChartButton>
+  ));
+
   useEffect(() => {
     fetchHistoricalData();
   }, [currency, days]);
@@ -97,14 +106,7 @@ const CoinInfo = ({ coin }) => {
                 marginTop: 20,
                 justifyContent: "space-around",
               }}>
-              {chartDays.map((day) => (
-                <ChartButton
-                  key={day.value}
-                  selected={day.value === days}
-                  onClick={() => setDays(day.value)}>
-                  {day.label}
-                </ChartButton>
-              ))}
+              {mappedChartDays}
             </div>
           </>
         )}

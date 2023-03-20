@@ -30,6 +30,7 @@ const StyledContainer = styled("div")(({ theme }) => ({
   StyledHeader = styled(Typography)({
     fontWeight: "bold",
     marginBottom: 20,
+    fontFamily: "'Space Grotesk', sans-serif",
   }),
   StyledDescription = styled(Typography)({
     width: "100%",
@@ -37,12 +38,13 @@ const StyledContainer = styled("div")(({ theme }) => ({
     paddingBottom: 15,
     paddingTop: 0,
     textAlign: "justify",
+    fontSize: 20,
   }),
   StyledMarketData = styled("div")(({ theme }) => ({
+    width: "100%",
     alignSelf: "start",
     padding: 5,
     paddingLeft: 25,
-    width: "100%",
     [theme.breakpoints.down("md")]: {
       display: "flex",
       justifyContent: "space-around",

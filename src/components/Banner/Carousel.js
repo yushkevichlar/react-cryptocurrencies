@@ -5,6 +5,7 @@ import axios from "axios";
 import { TrendingCoins } from "../../config/api";
 import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 
 const StyledCarousel = styled("div")({
     height: "50%",
@@ -42,11 +43,11 @@ const Carousel = () => {
     let profit = coin.price_change_percentage_24h >= 0;
 
     return (
-      <StyledLink to={`/coins/${coin.id}`}>
+      <StyledLink to={`/coins/${coin.id}`} key={coin.id}>
         <img
           src={coin?.image}
           alt={coin.name}
-          height="80"
+          height="180"
           style={{ marginBottom: 10 }}
         />
 
@@ -77,6 +78,25 @@ const Carousel = () => {
       items: 4,
     },
   };
+
+  if (!carouselItems.length)
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          marginTop: 100,
+        }}>
+        <CircularProgress
+          style={{
+            color: "gold",
+          }}
+          size={100}
+          thickness={1}
+        />
+      </div>
+    );
 
   return (
     <StyledCarousel>
