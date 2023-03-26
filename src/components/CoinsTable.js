@@ -59,10 +59,18 @@ const StyledTextField = styled(TextField)({
     fontFamily: "'Space Grotesk', sans-serif",
   }),
   StyledPagination = styled(Pagination)({
+    padding: 20,
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
     "& .MuiPaginationItem-root": {
       color: "#c88901",
       fontFamily: "'Space Grotesk', sans-serif",
       fontSize: 22,
+    },
+    "& .Mui-selected": {
+      color: "#000000",
+      backgroundColor: "#c88901",
     },
   });
 
@@ -223,12 +231,6 @@ const CoinsTable = () => {
         </TableContainer>
 
         <StyledPagination
-          style={{
-            padding: 20,
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-          }}
           count={Number((handleSearch()?.length / 10).toFixed(0))}
           onChange={(_, value) => handlePageChange(value)}
         />

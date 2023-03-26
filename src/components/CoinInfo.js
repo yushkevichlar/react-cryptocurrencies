@@ -13,22 +13,28 @@ import ChartButton from "./ChartButton";
 Chart.register(...registerables);
 
 const StyledContainer = styled("div")(({ theme }) => ({
-  width: "75%",
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  marginTop: 25,
-  padding: 40,
-  [theme.breakpoints.down("md")]: {
-    width: "100%",
-    marginTop: 0,
-    padding: 20,
-    paddingTop: 0,
+    width: "75%",
+    display: "flex",
     flexDirection: "column",
     alignItems: "center",
-  },
-}));
+    justifyContent: "center",
+    marginTop: 25,
+    padding: 40,
+    [theme.breakpoints.down("md")]: {
+      width: "100%",
+      marginTop: 0,
+      padding: 20,
+      paddingTop: 0,
+      flexDirection: "column",
+      alignItems: "center",
+    },
+  })),
+  StyledPeriodsWrapper = styled("div")({
+    width: "100%",
+    display: "flex",
+    marginTop: 20,
+    justifyContent: "space-around",
+  });
 
 const CoinInfo = ({ coin }) => {
   const [historicData, setHistoricData] = useState();
@@ -56,6 +62,26 @@ const CoinInfo = ({ coin }) => {
     </ChartButton>
   ));
 
+  const getDatasets = () => {
+    return {
+      data: historicData.map((coin) => coin[1]),
+      label: `Price (past ${days} days) in ${currency}`,
+      borderColor: "#eebc1d",
+    };
+  };
+
+  const getLabelsData = () => {
+    return historicData.map((coin) => {
+      let date = new Date(coin[0]),
+        time =
+          date.getHours() > 12
+            ? `${date.getHours() - 12}:${date.getMinutes()} PM`
+            : `${date.getHours()}:${date.getMinutes()} AM`;
+
+      return days === 1 ? time : date.toLocaleDateString();
+    });
+  };
+
   useEffect(() => {
     fetchHistoricalData();
   }, [currency, days]);
@@ -73,22 +99,8 @@ const CoinInfo = ({ coin }) => {
           <>
             <Line
               data={{
-                labels: historicData.map((coin) => {
-                  let date = new Date(coin[0]),
-                    time =
-                      date.getHours() > 12
-                        ? `${date.getHours() - 12}:${date.getMinutes()} PM`
-                        : `${date.getHours()}:${date.getMinutes()} AM`;
-
-                  return days === 1 ? time : date.toLocaleDateString();
-                }),
-                datasets: [
-                  {
-                    data: historicData.map((coin) => coin[1]),
-                    label: `Price (past ${days} days) in ${currency}`,
-                    borderColor: "#eebc1d",
-                  },
-                ],
+                labels: getLabelsData(),
+                datasets: [getDatasets()],
               }}
               options={{
                 elements: {
@@ -99,15 +111,7 @@ const CoinInfo = ({ coin }) => {
               }}
             />
 
-            <div
-              style={{
-                width: "100%",
-                display: "flex",
-                marginTop: 20,
-                justifyContent: "space-around",
-              }}>
-              {mappedChartDays}
-            </div>
+            <StyledPeriodsWrapper>{mappedChartDays}</StyledPeriodsWrapper>
           </>
         )}
       </StyledContainer>

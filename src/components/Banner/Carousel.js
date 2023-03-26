@@ -19,6 +19,12 @@ const StyledCarousel = styled("div")({
     cursor: "pointer",
     textTransform: "uppercase",
     color: "#ffffff",
+  }),
+  StyledProgressWrapper = styled("div")({
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 100,
   });
 
 export function numberWithCommas(number) {
@@ -71,31 +77,25 @@ const Carousel = () => {
   });
 
   const responsiveCarousel = {
+    2000: {
+      items: 5,
+    },
+    1200: {
+      items: 4,
+    },
+    800: {
+      items: 3,
+    },
     0: {
       items: 2,
-    },
-    512: {
-      items: 4,
     },
   };
 
   if (!carouselItems.length)
     return (
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          marginTop: 100,
-        }}>
-        <CircularProgress
-          style={{
-            color: "gold",
-          }}
-          size={100}
-          thickness={1}
-        />
-      </div>
+      <StyledProgressWrapper>
+        <CircularProgress style={{ color: "gold" }} size={100} thickness={1} />
+      </StyledProgressWrapper>
     );
 
   return (

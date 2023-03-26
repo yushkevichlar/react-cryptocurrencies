@@ -1,7 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { CryptoState } from "../CryptoContext";
 import { styled } from "@mui/system";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Select from "@mui/material/Select";
 import {
   AppBar,
   Container,
@@ -9,8 +11,6 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { CryptoState } from "../CryptoContext";
 
 const StyledTypography = styled(Typography)({
   flex: 1,
