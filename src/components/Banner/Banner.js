@@ -28,7 +28,7 @@ const StyledBanner = styled("div")({
     marginTop: 30,
     marginBottom: 50,
   }),
-  StyledTitle = styled(Typography)({
+  StyledTitle = styled(Typography)(({ theme }) => ({
     fontSize: "6.5rem",
     fontWeight: "bold",
     textTransform: "uppercase",
@@ -39,7 +39,16 @@ const StyledBanner = styled("div")({
     backgroundClip: "text",
     textFillColor: "transparent",
     animation: `${shineAnimation} 3s linear infinite`,
-  });
+    [theme.breakpoints.down("md")]: {
+      fontSize: "4rem",
+    },
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "3rem",
+    },
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "2rem",
+    },
+  }));
 
 const Banner = () => {
   return (

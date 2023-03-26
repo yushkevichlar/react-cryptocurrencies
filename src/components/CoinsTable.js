@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import { numberWithCommas } from "./Banner/Carousel";
 
-const StyledTextField = styled(TextField)({
+const StyledTextField = styled(TextField)(({ theme }) => ({
     marginBottom: 20,
     width: "100%",
     fontSize: 18,
@@ -47,17 +47,23 @@ const StyledTextField = styled(TextField)({
         borderColor: "#c88901",
       },
     },
-  }),
-  StyledTableRow = styled(TableRow)({
+    [theme.breakpoints.down("md")]: {
+      "& .MuiFormLabel-root": {
+        fontSize: "1rem",
+      },
+    },
+  })),
+  StyledTableRow = styled(TableRow)(({ theme }) => ({
     backgroundColor: "#16171a",
     "&:hover": {
       backgroundColor: "#131111",
     },
     cursor: "pointer",
-  }),
-  StyledTableCell = styled(TableCell)({
+  })),
+  StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontFamily: "'Space Grotesk', sans-serif",
-  }),
+    fontSize: 20,
+  })),
   StyledPagination = styled(Pagination)({
     padding: 20,
     width: "100%",
@@ -72,7 +78,14 @@ const StyledTextField = styled(TextField)({
       color: "#000000",
       backgroundColor: "#c88901",
     },
-  });
+  }),
+  StyledTableTitle = styled(Typography)(({ theme }) => ({
+    margin: 18,
+    fontFamily: "'Space Grotesk', sans-serif",
+    [theme.breakpoints.down("md")]: {
+      fontSize: "2rem",
+    },
+  }));
 
 const CoinsTable = () => {
   const [coins, setCoins] = useState([]);
@@ -127,11 +140,9 @@ const CoinsTable = () => {
   return (
     <ThemeProvider theme={darkTheme}>
       <Container style={{ textAlign: "center" }}>
-        <Typography
-          variant="h3"
-          style={{ margin: 18, fontFamily: "'Space Grotesk', sans-serif" }}>
+        <StyledTableTitle variant="h3">
           Cryptocurrency Prices by Market Cap
-        </Typography>
+        </StyledTableTitle>
 
         <StyledTextField
           variant="outlined"
@@ -151,7 +162,6 @@ const CoinsTable = () => {
                       style={{
                         color: "#000000",
                         fontWeight: "700",
-                        fontSize: 20,
                       }}
                       key={head}
                       align={head === "Coin" ? "center" : "right"}>
