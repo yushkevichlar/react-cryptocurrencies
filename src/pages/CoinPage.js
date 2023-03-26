@@ -43,7 +43,6 @@ const StyledContainer = styled("div")(({ theme }) => ({
   StyledMarketData = styled("div")(({ theme }) => ({
     width: "100%",
     alignSelf: "start",
-    padding: 5,
     paddingLeft: 25,
     [theme.breakpoints.down("md")]: {
       display: "flex",

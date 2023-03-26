@@ -63,6 +63,11 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
   StyledTableCell = styled(TableCell)(({ theme }) => ({
     fontFamily: "'Space Grotesk', sans-serif",
     fontSize: 20,
+    [theme.breakpoints.down("md")]: {
+      "& .MuiFormLabel-root": {
+        fontSize: "1rem",
+      },
+    },
   })),
   StyledPagination = styled(Pagination)({
     padding: 20,
@@ -76,7 +81,7 @@ const StyledTextField = styled(TextField)(({ theme }) => ({
     },
     "& .Mui-selected": {
       color: "#000000",
-      backgroundColor: "#c88901",
+      backgroundColor: "#c88901 !important",
     },
   }),
   StyledTableTitle = styled(Typography)(({ theme }) => ({
@@ -196,14 +201,10 @@ const CoinsTable = () => {
                               display: "flex",
                               flexDirection: "column",
                             }}>
-                            <span
-                              style={{
-                                textTransform: "uppercase",
-                                fontSize: 28,
-                              }}>
+                            <span style={{ textTransform: "uppercase" }}>
                               {row.symbol}
                             </span>
-                            <span style={{ color: "darkgrey", fontSize: 20 }}>
+                            <span style={{ color: "darkgrey" }}>
                               {row.name}
                             </span>
                           </div>
@@ -214,18 +215,17 @@ const CoinsTable = () => {
                           style={{
                             color: profit > 0 ? "#0cbd78" : "#ec0f24",
                             fontWeight: 500,
-                            fontSize: 18,
                           }}>
                           {profit && "+"}
                           {row.price_change_percentage_24h.toFixed(2)}%
                         </StyledTableCell>
 
-                        <StyledTableCell align="right" style={{ fontSize: 18 }}>
+                        <StyledTableCell align="right">
                           {symbol}{" "}
                           {numberWithCommas(row.current_price.toFixed(2))}
                         </StyledTableCell>
 
-                        <StyledTableCell align="right" style={{ fontSize: 18 }}>
+                        <StyledTableCell align="right">
                           {symbol}{" "}
                           {numberWithCommas(
                             row.market_cap.toString().slice(0, -6)
